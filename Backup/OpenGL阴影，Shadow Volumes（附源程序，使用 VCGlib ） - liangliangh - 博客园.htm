@@ -1,0 +1,841 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- base href="http://www.cnblogs.com/liangliangh/p/4165228.html" --><style type="text/css">body { margin-left:0;margin-right:0;margin-top:0; }#google-cache-hdr {background:#f5f5f5 !important;font:13px arial,sans-serif !important;text-align:left !important;color:#202020 !important;border:0 !important;margin:0 !important;border-bottom:1px solid #cecece !important;line-height:16px !important ;padding:16px 28px 24px 28px !important;}#google-cache-hdr * {display:inline !important;font:inherit !important;text-align:inherit !important;color:inherit !important;line-height:inherit !important;background:none !important;border:0 !important;margin:0 !important;padding:0 !important;letter-spacing:0 !important;}#google-cache-hdr a {text-decoration:none !important;color:#1a0dab !important;}#google-cache-hdr a:hover { text-decoration:underline !important; }#google-cache-hdr a:visited { color:#609 !important; }#google-cache-hdr div { display:block !important;margin-top:4px !important; }#google-cache-hdr b {font-weight:bold !important;display:inline-block !important;direction:ltr !important;}</style></head><body><div id="google-cache-hdr" dir="ltr"><div>這是 Google 對 <a href="http://www.cnblogs.com/liangliangh/p/4165228.html" dir="ltr">http://www.cnblogs.com/liangliangh/p/4165228.html</a> 的快取。 這是該網頁於 2015年12月18日 13:16:04 GMT 顯示時的快照。 </div><div>在此期間，<a href="http://www.cnblogs.com/liangliangh/p/4165228.html" dir="ltr">目前網頁</a>可能已經變更。 <a href="http://support.google.com/websearch/bin/answer.py?hl=zh-TW&amp;p=cached&amp;answer=1687222">瞭解更多資訊</a></div><div></div><div><span style="display:inline-block !important;margin-top:8px !important;margin-right:104px !important;white-space:nowrap !important;"><span style="margin-right:28px !important;"><span style="font-weight:bold !important;">完整版</span></span><span style="margin-right:28px !important;"><a href="http://webcache.googleusercontent.com/search?q=cache:b0gCZd2Wy9UJ:www.cnblogs.com/liangliangh/p/4165228.html&amp;hl=zh-TW&amp;gl=tw&amp;strip=1&amp;vwsrc=0">純文字版</a></span><span style="margin-right:28px !important;"><a href="http://webcache.googleusercontent.com/search?q=cache:b0gCZd2Wy9UJ:www.cnblogs.com/liangliangh/p/4165228.html&amp;hl=zh-TW&amp;gl=tw&amp;strip=0&amp;vwsrc=1">檢視原始碼</a></span></span><span style="display:inline-block !important;margin-top:8px !important;color:#717171 !important;">提示：如要在這個網頁上快速尋找您所搜尋的字詞，請按下 <b>Ctrl+F</b> 鍵或 <b>⌘-F</b> 鍵 (Mac)，然後使用尋找列進行搜尋。</span></div></div><div style="position:relative;">
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>OpenGL阴影，Shadow Volumes（附源程序，使用 VCGlib ） - liangliangh - 博客园</title>
+<link type="text/css" rel="stylesheet" href="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-kubrick.css">
+<link type="text/css" rel="stylesheet" href="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/151287.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/liangliangh/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/liangliangh/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/liangliangh/wlwmanifest.xml">
+<script src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.htm" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'liangliangh', cb_enable_mathjax=true;</script>
+<script src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+
+
+<a name="top"></a>
+
+<div id="header">
+    
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/liangliangh/">亮亮的园子</a></h1>
+<p id="tagline">一个具有学术气质的IT技术博客</p>
+</div>
+<div id="wrapper">
+<div id="main">
+    
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/liangliangh/p/4165228.html">OpenGL阴影，Shadow Volumes（附源程序，使用 VCGlib ）</a>
+		</h2>
+		<div class="postText"><div id="cnblogs_post_body"><p>&nbsp;</p>
+<p>实验平台：Win7，VS2010</p>
+<p>&nbsp;</p>
+<p>先上结果截图：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231929347331819.png" alt="OpenGL阴影 Shadow Volumes" height="520" width="650">&nbsp;<br><img style="line-height: 1.5;" src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231930378438470.png" alt="" height="258" width="322"><span style="line-height: 1.5;">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231930579994214.png" alt="" height="258" width="322">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>本文是我前一篇博客：<a href="http://www.cnblogs.com/liangliangh/p/4131103.html" target="_blank">OpenGL阴影，Shadow Mapping（附源程序）</a>的
+下篇，描述两个最常用的阴影技术中的第二个，Shadow Volumes 方法。将从基本原理出发，首先讲解 Zpass 方法，然后是 Zfail 
+方法（比较实际的方法），最后对 Shadow Mapping 和 Shadow Volumes 方法做简要分析对比。</p>
+<p>Shadow Volumes 需要网格的连接信息，本文使用 <strong><a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/" target="_blank">VCGlib 库</a>&nbsp;</strong>构造拓扑信息及读写网格文件，为了清晰，将 VCGlib 使用的简单总结作为附录，附于文章的最后。</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18px;">1. 数学原理</span></strong></p>
+<p>关于阴影的定义，请见我的前一篇博客（文献[1]）。Shadow Mapping 
+将空间各个方向上离光源最近点的距离编码成深度纹理。Shadow Volumes 
+采用一种不同的方法，它直接构造光源被物体（投射阴影的物体，Shadow 
+caster）遮挡的空间的边界，即落在这个边界内的任何点都处于阴影中，反之被光源照亮，如下图所示（使用<a href="http://www.blender.org/" target="_blank">Blender</a>制作，另见文献[3]PPT第10页）：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/171018122971370.png" alt="" height="361" width="393">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/162321221094301.png" alt="" height="361" width="394"></p>
+<p>遮挡空间边界所包围的空间即为 Shadow Volume （阴影体积），构造 Shadow 
+Volume&nbsp;并不困难，对上图中的三角形（设顶点为 A,B,C）只需要从光源点到三角形顶点做连线并延伸出去到足够远（设 A,B,C 
+延伸到点 
+D,E,F），并用这些多边形构成封闭体积：面ABC、面ADEB、面BEFC、面CFDA、面EDF，共5个面，注意顶点字母的顺序已经考虑了顶点环绕
+方向向外（右手法则）。</p>
+<p>那如何判断一个点是否位于 Shadow Volume&nbsp;内部呢？&nbsp;Shadow Volumes 
+采用一种间接方法：从一个位于所有 Shadow Volume&nbsp;外的点出发作射线，从 0 开始计数，每穿入一个&nbsp;Shadow 
+Volume +1，每穿出一个 Shadow Volume&nbsp;-1，这样到达点 P 时，如果计数为 0 说明位于阴影体积外，大于 0 
+说明在一层或多层 Shadow Volume&nbsp;内部。原理是，每个 Shadow Volume 都是封闭的，如果点 P 
+位于所有&nbsp;Shadow Volume 外，则穿入和穿出必成对出现，有一种极端情况：射线与一个&nbsp;Shadow Volume 
+相切于棱边上，这时射线与&nbsp;Shadow Volume 表面只有 1 个交点而不是通常的 2 个交点（Shadow Volume 
+为凸时），好在，这里说的几何原理的实际实现使用光栅化进行离散化，在离散化空间中，这种极端情况并不存在（这和光栅化特性有关，
+如&nbsp;"watertight" rasterization 
+见文献[3]）。这个原理如下图所示（摘自文献[3]PPT第18页，二维示意）：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/170947476562498.png" alt="" height="256" width="436"></p>
+<p>这个计数的起点其实就是摄像机所在点，计数的任务可以由图形硬件的 Stencil Buffer （模板缓冲）机制提供，可以看到，这里要求摄像机位于阴影之外。</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18px;">2. Zpass 方法</span></strong></p>
+<p>直接实现第1节的数学原理的方法即为 Zpass 方法。实现 Zpass 需要完成两方面工作：构造 Shadow Volume 、利用 
+Stencil Buffer 的功能实现计数。我们先来看最简单的情况，场景中只有两个三角形和一个地板，如下图（看到阴影对判断空间位置的重要性）：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172003188906765.png" alt="" height="313" width="313">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172003447658969.png" alt="" height="313" width="313"></p>
+<p>场景代码如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 世界，四边形地板</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> draw_world()
+{
+    glStaff::xyz_frame(</span><span style="color: #800080;">2</span>, <span style="color: #800080;">2</span>, <span style="color: #800080;">2</span>, <span style="color: #0000ff;">false</span><span style="color: #000000;">);
+    glBegin(GL_POLYGON);
+        glNormal3f(</span><span style="color: #800080;">0</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">0</span><span style="color: #000000;">);
+        glVertex3f(</span>-<span style="color: #800080;">5</span>, <span style="color: #800080;">0</span>,-<span style="color: #800080;">5</span>); glVertex3f(-<span style="color: #800080;">5</span>, <span style="color: #800080;">0</span>, <span style="color: #800080;">5</span><span style="color: #000000;">);
+        glVertex3f(</span><span style="color: #800080;">5</span>, <span style="color: #800080;">0</span>, <span style="color: #800080;">5</span>); glVertex3f(<span style="color: #800080;">5</span>, <span style="color: #800080;">0</span>,-<span style="color: #800080;">5</span><span style="color: #000000;">);
+    glEnd();
+}
+
+glm::vec3 tri1[</span><span style="color: #800080;">3</span>] = { glm::vec3(<span style="color: #800080;">0</span>, <span style="color: #800080;">3</span>, <span style="color: #800080;">0</span>), glm::vec3( <span style="color: #800080;">0</span>, <span style="color: #800080;">3</span>, <span style="color: #800080;">2</span>), glm::vec3(<span style="color: #800080;">2</span>, <span style="color: #800080;">3</span>, <span style="color: #800080;">0</span><span style="color: #000000;">) };
+glm::vec3 tri2[</span><span style="color: #800080;">3</span>] = { glm::vec3(<span style="color: #800080;">1</span>, <span style="color: #800080;">2</span>,-<span style="color: #800080;">1</span>), glm::vec3(-<span style="color: #800080;">1</span>, <span style="color: #800080;">2</span>,-<span style="color: #800080;">1</span>), glm::vec3(<span style="color: #800080;">1</span>, <span style="color: #800080;">2</span>, <span style="color: #800080;">1</span><span style="color: #000000;">) };
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 模型，两个三角形</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> draw_model()
+{
+    GLfloat _ca[</span><span style="color: #800080;">4</span>], _cd[<span style="color: #800080;">4</span><span style="color: #000000;">];
+    glGetMaterialfv(GL_FRONT, GL_AMBIENT, _ca);
+    glGetMaterialfv(GL_FRONT, GL_DIFFUSE, _cd);
+    GLfloat c[</span><span style="color: #800080;">4</span><span style="color: #000000;">];
+    glBegin(GL_TRIANGLES);
+        c[</span><span style="color: #800080;">0</span>]=<span style="color: #800080;">1</span>; c[<span style="color: #800080;">1</span>]=<span style="color: #800080;">0</span>; c[<span style="color: #800080;">2</span>]=<span style="color: #800080;">0</span>; c[<span style="color: #800080;">3</span>]=<span style="color: #800080;">1</span><span style="color: #000000;">; glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, c);
+        glNormal3fv(</span>&amp;glm::normalize(glm::cross(tri1[<span style="color: #800080;">1</span>]-tri1[<span style="color: #800080;">0</span>], tri1[<span style="color: #800080;">2</span>]-tri1[<span style="color: #800080;">0</span>]))[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++i) glVertex3fv(&amp;tri1[i][<span style="color: #800080;">0</span>]); <span style="color: #008000;">//</span><span style="color: #008000;"> tri1，红色</span>
+        c[<span style="color: #800080;">0</span>]=<span style="color: #800080;">0</span>; c[<span style="color: #800080;">1</span>]=<span style="color: #800080;">1</span>; c[<span style="color: #800080;">2</span>]=<span style="color: #800080;">0</span>; c[<span style="color: #800080;">3</span>]=<span style="color: #800080;">1</span><span style="color: #000000;">; glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, c);
+        glNormal3fv(</span>&amp;glm::normalize(glm::cross(tri2[<span style="color: #800080;">1</span>]-tri2[<span style="color: #800080;">0</span>], tri2[<span style="color: #800080;">2</span>]-tri2[<span style="color: #800080;">0</span>]))[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++i) glVertex3fv(&amp;tri2[i][<span style="color: #800080;">0</span>]); <span style="color: #008000;">//</span><span style="color: #008000;"> tri2，绿色</span>
+<span style="color: #000000;">    glEnd();
+    glMaterialfv(GL_FRONT, GL_AMBIENT, _ca);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, _cd);
+}</span></pre>
+</div>
+<p><span style="line-height: 1.5;">构造 Shadow Volume 代码如下（light_pos 为光源位置，位置式光源）：&nbsp;</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">float</span> d_far = <span style="color: #800080;">10</span><span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 构造、绘制 Shadow Volume，仅考虑位置光源</span>
+<span style="color: #0000ff;">void</span> draw_model_volumes(<span style="color: #000000;">)
+{</span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> t=<span style="color: #800080;">0</span>; t&lt;<span style="color: #800080;">2</span>; ++<span style="color: #000000;">t){</span><span style="color: #000000;">
+        glm::vec3</span>* tri = t==<span style="color: #800080;">0</span> ? tri1 : tri2; <span style="color: #008000;">//</span><span style="color: #008000;"> tri1 or tri2</span>
+        glm::vec3 tri_far[<span style="color: #800080;">3</span><span style="color: #000000;">];
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            tri_far[i] </span>= tri[i] + glm::normalize(tri[i]-glm::vec3(light_pos))*<span style="color: #000000;">d_far;
+        }
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            glBegin(GL_POLYGON); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 三个边挤出（extrude）的四边形</span><span style="color: #000000;">
+                glVertex3fv(</span>&amp;tri[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;tri_far[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;tri_far[(i+<span style="color: #800080;">1</span>)%<span style="color: #800080;">3</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;tri[(i+<span style="color: #800080;">1</span>)%<span style="color: #800080;">3</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+            glEnd();
+        }
+        glBegin(GL_TRIANGLES); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 顶部（near cap），原三角形，对 Zpass 来说可选<br></span><span style="color: #0000ff;">            for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++i) glVertex3fv(&amp;tri[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+        glEnd();
+        glBegin(GL_TRIANGLES); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 底部（far cap），挤出三角形，对 Zpass 来说可选<br></span><span style="color: #0000ff;">            for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++i) glVertex3fv(&amp;tri_far[<span style="color: #800080;">2</span>-i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+        glEnd();
+    }
+}</span></pre>
+</div>
+<p><span style="line-height: 1.5;">构造的 Shadow Volume 如下图所示：</span></p>
+<p><span style="line-height: 1.5;"><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172037460152917.png" alt="" height="312" width="312">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172042130156886.png" alt="" height="312" width="312"></span></p>
+<p><span style="line-height: 1.5;">Stencil Buffer 实现计数代码：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> ------------------------------------------ 清除缓冲区，包括模板缓冲</span>
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |<span style="color: #000000;"> GL_STENCIL_BUFFER_BIT);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> ------------------------------------------ 第1遍，渲染环境光，深度值
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 关闭光源，打开环境光</span>
+GLboolean _li0 = glIsEnabled(GL_LIGHT0); <span style="color: #0000ff;">if</span><span style="color: #000000;">(_li0) glDisable(GL_LIGHT0);
+glMatrixMode(GL_MODELVIEW); glLoadMatrixf(</span>&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_world();
+glMultMatrixf(</span>&amp;mat_model[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_model();
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(_li0) glEnable(GL_LIGHT0);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> ------------------------------------------ 第2遍，渲染模板值
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 不需要光照，不更新颜色和深度缓冲</span>
+GLboolean _li = glIsEnabled(GL_LIGHTING); <span style="color: #0000ff;">if</span><span style="color: #000000;">(_li) glDisable(GL_LIGHTING);
+glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+glDepthMask(GL_FALSE); glStencilMask(</span>~<span style="color: #800080;">0</span><span style="color: #000000;">);
+glEnable(GL_CULL_FACE);
+glEnable(GL_STENCIL_TEST); glStencilFunc(GL_ALWAYS, </span><span style="color: #800080;">0</span>, ~<span style="color: #800080;">0</span><span style="color: #000000;">);
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 剔除背面留下正面，穿入，模板值 加 1</span>
+<span style="color: #000000;">glCullFace(GL_BACK); glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+glMatrixMode(GL_MODELVIEW);glLoadMatrixf(</span>&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span>]);glMultMatrixf(&amp;mat_model[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_model_volumes();
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 剔除正面留下背面，穿出，模板值 减 1</span>
+<span style="color: #000000;">glCullFace(GL_FRONT); glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
+glMatrixMode(GL_MODELVIEW);glLoadMatrixf(</span>&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span>]);glMultMatrixf(&amp;mat_model[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_model_volumes();
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 恢复状态</span>
+<span style="color: #0000ff;">if</span><span style="color: #000000;">(_li) glEnable(GL_LIGHTING);
+glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+glDepthMask(GL_TRUE); glStencilMask(</span>~<span style="color: #800080;">0</span><span style="color: #000000;">);
+glDisable(GL_CULL_FACE); glDisable(GL_STENCIL_TEST); glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> ------------------------------------------ 第3遍，渲染光源光照，依据模板值判断阴影
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 关闭环境光，打开光源</span>
+GLfloat _lia[<span style="color: #800080;">4</span><span style="color: #000000;">]; glGetFloatv(GL_LIGHT_MODEL_AMBIENT, _lia);
+GLfloat ca[</span><span style="color: #800080;">4</span>]={<span style="color: #800080;">0</span><span style="color: #000000;">}; glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ca);
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 模板测试为，等于0通过， 深度测试为，相等通过，颜色混合为直接累加</span>
+glEnable(GL_STENCIL_TEST); glStencilFunc(GL_EQUAL, <span style="color: #800080;">0</span>, ~<span style="color: #800080;">0</span><span style="color: #000000;">);
+glDepthFunc(GL_EQUAL); glBlendFunc(GL_ONE, GL_ONE);
+
+glMatrixMode(GL_MODELVIEW); glLoadMatrixf(</span>&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+glLightfv(GL_LIGHT0, GL_POSITION, </span>&amp;light_pos[<span style="color: #800080;">0</span>]); <span style="color: #008000;">//</span><span style="color: #008000;"> 位置式光源</span>
+<span style="color: #000000;">    draw_world();
+glMultMatrixf(</span>&amp;mat_model[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_model();
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 恢复状态</span>
+<span style="color: #000000;">glLightModelfv(GL_LIGHT_MODEL_AMBIENT, _lia);
+glDisable(GL_STENCIL_TEST); glStencilFunc(GL_ALWAYS, </span><span style="color: #800080;">0</span>, ~<span style="color: #800080;">0</span><span style="color: #000000;">);
+glDepthFunc(GL_LESS); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 在光源处绘制一个黄色的球</span>
+glMatrixMode(GL_MODELVIEW); glLoadMatrixf(&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    dlight(</span><span style="color: #800080;">0.05f</span>);</pre>
+</div>
+<p><span style="line-height: 1.5;">这里要用到 Stencil Buffer，要在创建窗口时（即创建 OpenGL Context）启用 Stencil Buffer，GLFW 默认就启用了（8-bit）。第1遍渲染时，仅开启环境光，渲染场景后，颜色缓冲是环境光贡献，深度缓冲是离摄像机最近的片断的深度。第2遍渲染，只更新 Stencil Buffer，因为深度缓冲已经保存了最近片断深度，深度测试 GL_LESS 通过的片断都是未经遮挡的 Shadow Volume 部分，如果看到了正面，模板值+1，背面-1，注意正背面是依据顶点环绕方向确定的（光栅化的任务），因为是深度测试通过后计数故称作 Zpass 。第3遍渲染，因为模板值为0的点为光照，否则为阴影，设置模板测试为和0比较相等时通过，并设置混合函数为直接累加（和 Shadow Mapping 类似）。</span></p>
+<p>模板缓冲区的值（全黑为模板值为0，每个颜色梯度模板值变化1），以及最终渲染结果如下图所示：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172119218592144.png" alt="" height="312" width="312">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/172125407978612.png" alt="" height="312" width="312"></p>
+<p>读取模板缓冲区使用&nbsp;glReadPixels(ox,oy, width,height, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, data)，<span style="line-height: 1.5;">上面所有代码见所附程序中的 volumes_basic0.cpp。</span></p>
+<p>在讲轮廓边之前，先看下上面代码几个需要改进的地方：</p>
+<ol>
+<li>在渲染模板值时，不需要渲染两遍（一遍正面，一遍背面），OpenGL 支持在一遍渲染中对正背面使用不同的模板更新操作，使用&nbsp;glStencilOpSeparate() 函数；</li>
+<li>为防止模板缓冲区溢出或减小为负数（默认模板缓冲为8-bit），可以使用绕回模式（wrap，255加1变成0，0减1变成255）；</li>
+<li>可以利用齐次坐标特性将 Shadow Volume 延伸到无穷远，对于 Zpass 来说，不需要对 Shadow Volume 进行封口（cap），底部不需要封口因为 Zpass 只关心未被遮挡（Zpass）部分，顶部不需要封口因为它正好被原三角形遮挡（不能通过 Z 测试）。</li>
+<li>上面代码没有考虑光源为平行光源的情况（光源位置坐标w分量为0），也没有考虑三角形背对光源的情况，背对时 Shadow Volume 的顶点环绕方向将向内部（如果所有 Shadow Volume 都向内部也没关系，问题是向内向外不一致将导致计数错误），是面对还是背对光源可以用光源到三角形上任意一点的连线向量和三角形法向量的内积的正负号判断；</li>
+<li>上面代码未考虑模型变换矩阵的变换（鼠标左键拖动物体，阴影将不再正确），因为模型变换同样施加到 Shadow Volume 上，只需对光源位置进行反变换。</li>
+</ol>
+<p>上面代码的 “第2遍，渲染模板值” 的绘制部分等价代码如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 不需要光照，不更新颜色和深度缓冲</span>
+<span style="color: #008000;">// ...
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 正面加1，背面减1</span>
+glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP); <span style="color: #008000;">//</span><span style="color: #008000;"> 改进后</span>
+<span style="color: #000000;">glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
+glMatrixMode(GL_MODELVIEW); glLoadMatrixf(</span>&amp;mat_view[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span>]); glMultMatrixf(&amp;mat_model[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+    draw_model_volumes(glm::affineInverse(mat_model)</span>*<span style="color: #000000;">light_pos);
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 恢复状态</span>
+<span style="color: #008000;">// ...</span></pre>
+</div>
+<p><span style="line-height: 1.5;">将三角形边挤出到无穷远的代码如下（考虑三角形是否背对光源）：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 构造、绘制 Shadow Volume，挤出（extrude）到无穷远</span>
+<span style="color: #0000ff;">void</span> draw_model_volumes(glm::vec4&amp;<span style="color: #000000;"> lpos)
+{
+    </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> t=<span style="color: #800080;">0</span>; t&lt;<span style="color: #800080;">2</span>; ++<span style="color: #000000;">t){
+        glm::vec3</span>* tri = t==<span style="color: #800080;">0</span> ? tri1 : tri2; <span style="color: #008000;">//</span><span style="color: #008000;"> tri1 or tri2</span>
+        glm::vec4 tri_far[<span style="color: #800080;">3</span><span style="color: #000000;">];
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            tri_far[i] </span>=<span style="color: #000000;"> glm::vec4(
+                tri[i].x</span>*lpos.w-lpos.x, tri[i].y*lpos.w-lpos.y, tri[i].z*lpos.w-lpos.z, <span style="color: #800080;">0</span><span style="color: #000000;">);
+        }
+        glm::vec3 n </span>= glm::cross(tri[<span style="color: #800080;">1</span>]-tri[<span style="color: #800080;">0</span>], tri[<span style="color: #800080;">2</span>]-tri[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+        glm::vec3 l0 </span>= lpos.w==<span style="color: #800080;">0</span> ? glm::vec3(lpos) : glm::vec3(lpos)/lpos.w-tri[<span style="color: #800080;">0</span><span style="color: #000000;">];
+        </span><span style="color: #0000ff;">int</span> m = glm::dot(n,l0)&gt;=<span style="color: #800080;">0</span> ? <span style="color: #800080;">1</span> : -<span style="color: #800080;">1</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> 是否反转四边形环绕方向</span>
+        <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            glBegin(GL_POLYGON); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 三个边挤出（extrude）的四边形</span>
+                glVertex3fv(&amp;tri[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;tri_far[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;tri_far[(i+m+<span style="color: #800080;">3</span>)%<span style="color: #800080;">3</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;tri[(i+m+<span style="color: #800080;">3</span>)%<span style="color: #800080;">3</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+            glEnd();
+        }
+    }
+}</span></pre>
+</div>
+<p><span style="line-height: 1.5;">位置光源和平行光源的对比如下：</span></p>
+<p><span style="line-height: 1.5;"><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/192150366574811.png" alt="" height="311" width="311">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/192151167821969.png" alt="" height="311" width="311"><br><img style="line-height: 1.5;" src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/192151424696118.png" alt="" height="311" width="311"><span style="line-height: 1.5;">&nbsp;</span><img style="line-height: 1.5;" src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/192153083296882.png" alt="" height="311" width="311"></span></p>
+<p><span style="line-height: 1.5;">这部分代码见所附程序中的 volumes_basic1.cpp。</span></p>
+<p>到目前为止，我们的场景过于简单，现在考虑复杂的网格，这里仅考虑质量好的三角网格（封闭，任意点为二维流形，manifold，即每个边接两个面，面之间无交叉）。我们使用 VCGlib，关于用 VCGlib 读写网格文件、构造顶点边面连接信息、法向量计算、平滑等处理请见本文最后的附录。最简单的将上述方法扩展到复杂网格的方法是：对每个三角形都构造 Shadow Volume ，对一个 mesh 的每个三角形构造 Shadow Volume 的代码如下（读入的 PLY 网格文件已经预先用 Blender 和 MeshLab 处理为 manifold 三角网格，关于 VCGlib 的使用见最后的附录）：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 构造、绘制 Shadow Volume</span>
+<span style="color: #0000ff;">void</span> draw_model_volumes(GLMesh&amp; mesh, glm::vec4&amp; lpos<span style="color: #000000;">)
+{
+    assert(mesh.FN()</span>==<span style="color: #000000;">mesh.face.size()); <span style="color: #008000;">// vcg::tri::Allocator&lt;&gt;::CompactFace/Edge/VertexVector()
+    </span></span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;mesh.FN(); ++i){ <span style="color: #008000;">//</span><span style="color: #008000;"> for each face (i.e. triangle)</span>
+        GLMesh::FaceType&amp; f =<span style="color: #000000;"> mesh.face[i];
+        glm::vec4 tri_far[</span><span style="color: #800080;">3</span>]; <span style="color: #008000;">//</span><span style="color: #008000;"> 挤出的3个点，到无穷远</span>
+        <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            tri_far[i] </span>=<span style="color: #000000;"> glm::vec4(
+                f.V(i)</span>-&gt;P().X()*lpos.w-<span style="color: #000000;">lpos.x,
+                f.V(i)</span>-&gt;P().Y()*lpos.w-<span style="color: #000000;">lpos.y,
+                f.V(i)</span>-&gt;P().Z()*lpos.w-lpos.z, <span style="color: #800080;">0</span><span style="color: #000000;"> );
+        }
+        glm::vec3 n( vcg_to_glm(f.N()) );
+        glm::vec3 l0 </span>= lpos.w==<span style="color: #800080;">0</span> ?<span style="color: #000000;"> glm::vec3(lpos) :
+            glm::vec3(lpos)</span>/lpos.w - vcg_to_glm(f.V(<span style="color: #800080;">0</span>)-&gt;<span style="color: #000000;">P());
+        </span><span style="color: #0000ff;">int</span> m = glm::dot(n,l0)&gt;=<span style="color: #800080;">0</span> ? <span style="color: #800080;">1</span> : -<span style="color: #800080;">1</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> 是否反转四边形环绕方向</span>
+        <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; ++<span style="color: #000000;">i){
+            glBegin(GL_POLYGON); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 三个边挤出（extrude）的四边形</span><span style="color: #000000;">
+                glVertex3fv(</span>&amp;f.V(i)-&gt;P()[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;tri_far[i][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;tri_far[(i+m+<span style="color: #800080;">3</span>)%<span style="color: #800080;">3</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;f.V((i+m+<span style="color: #800080;">3</span>)%<span style="color: #800080;">3</span>)-&gt;P()[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+            glEnd();
+        }
+    }
+}</span></pre>
+</div>
+<p>程序结果如下：左上为最终结果；右上为对应 Stencil 值（颜色梯度表示变化 1，可以想见 Stencil 的更新非常频繁，但因为都是+1和-1操作，所以累积值并不一定很大）；下面是 Shadow Volume 的显示，可以看到，因为每个三角形都构造 Shadow Volume，Shadow Volume 的线条非常密。渲染时间约 180ms：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/230935309218969.png" alt="" height="249" width="312">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231422527656889.png" alt="" height="250" width="312"><br><img style="line-height: 1.5;" src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/230937071713898.png" alt="" height="250" width="313"><span style="line-height: 1.5;">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231101531403473.png" alt="" height="249" width="312"></span></p>
+<p>并不需要对所有边都进行挤出（extrude），只需要对某些被称作 “轮廓边” 的边（准确的说是 “可能轮廓边”）进行挤出就可以构造出合格的 Shadow Volume，“可能轮廓边” 是指其所连接的两个面（对 manifold 网格每个边必连接两个面）一个面对光源另一个背对光源。面对还是背对光源可以用三角形面法向量和光源到三角形上任一点连线向量的内积的正负号判断，优化后的，只对 “可能轮廓边” 进行挤出的代码如下，注意和上面不同，此时对边进行遍历，而不再是三角形，注意要保证四边形环绕方向为向外：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 构造、绘制 Shadow Volume</span>
+<span style="color: #0000ff;">void</span> draw_model_volumes(GLMesh&amp; mesh, glm::vec4&amp; lpos<span style="color: #000000;">)
+{</span>
+    assert(mesh.EN()==<span style="color: #000000;">mesh.edge.size());
+    </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;mesh.EN(); ++<span style="color: #000000;">i){
+        GLMesh::EdgeType</span>&amp; e =<span style="color: #000000;"> mesh.edge[i];
+        GLMesh::FaceType</span>* fa =<span style="color: #000000;"> e.EFp(); <span style="color: #008000;">// fa,fb 为边 e 邻接的两个面</span>
+        GLMesh::FaceType</span>* fb = fa-&gt;<span style="color: #000000;">FFp(e.EFi());
+        glm::vec3 l0 </span>= lpos.w==<span style="color: #800080;">0</span> ?<span style="color: #000000;"> glm::vec3(lpos) :
+            glm::vec3(lpos)</span>/lpos.w-vcg_to_glm(e.V(<span style="color: #800080;">0</span>)-&gt;<span style="color: #000000;">P());
+        </span><span style="color: #0000ff;">int</span> sa = glm::dot(l0, vcg_to_glm(fa-&gt;N()))&gt;=<span style="color: #800080;">0</span> ? <span style="color: #800080;">1</span> : -<span style="color: #800080;">1</span><span style="color: #000000;">; <span style="color: #008000;">// 面对还是背对光源
+        </span></span><span style="color: #0000ff;">int</span> sb = glm::dot(l0, vcg_to_glm(fb-&gt;N()))&gt;=<span style="color: #800080;">0</span> ? <span style="color: #800080;">1</span> : -<span style="color: #800080;">1</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">if</span>( sa*sb &lt; <span style="color: #800080;">0</span><span style="color: #000000;"> ){ <span style="color: #008000;">// 一个面面对，一个面背对光源，“可能轮廓边”</span>
+            GLMesh::VertexType</span>* va = fa-&gt;<span style="color: #000000;">V(e.EFi());
+            GLMesh::VertexType</span>* vb = fa-&gt;V((e.EFi()+<span style="color: #800080;">1</span>)%<span style="color: #800080;">3</span><span style="color: #000000;">);
+            </span><span style="color: #0000ff;">if</span>(sa&lt;<span style="color: #800080;">0</span>) std::swap(va, vb); <span style="color: #008000;">//</span><span style="color: #008000;"> 确定顶点顺序，是最终四边形环绕方向向外</span>
+            glm::vec4 e_far[<span style="color: #800080;">2</span>]; <span style="color: #008000;">//</span><span style="color: #008000;"> 挤出的2个点，到无穷远</span>
+            e_far[<span style="color: #800080;">0</span>] =<span style="color: #000000;"> glm::vec4(
+                va</span>-&gt;P().X()*lpos.w-<span style="color: #000000;">lpos.x,
+                va</span>-&gt;P().Y()*lpos.w-<span style="color: #000000;">lpos.y,
+                va</span>-&gt;P().Z()*lpos.w-lpos.z, <span style="color: #800080;">0</span><span style="color: #000000;"> );
+            e_far[</span><span style="color: #800080;">1</span>] =<span style="color: #000000;"> glm::vec4(
+                vb</span>-&gt;P().X()*lpos.w-<span style="color: #000000;">lpos.x,
+                vb</span>-&gt;P().Y()*lpos.w-<span style="color: #000000;">lpos.y,
+                vb</span>-&gt;P().Z()*lpos.w-lpos.z, <span style="color: #800080;">0</span><span style="color: #000000;"> );
+            glBegin(GL_POLYGON); </span><span style="color: #008000;">//</span><span style="color: #008000;"> 边挤出（extrude）的四边形</span><span style="color: #000000;">
+                glVertex3fv(</span>&amp;va-&gt;P()[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;e_far[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex4fv(</span>&amp;e_far[<span style="color: #800080;">1</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                glVertex3fv(</span>&amp;vb-&gt;P()[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+            glEnd();
+        }
+    }
+}</span><span style="font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; background-color: #ffffff;"><br></span></pre>
+</div>
+<p>再看结果，对比上面的图，现在 Shadow Volume 的边稀疏多了，且渲染时间减少到了 45ms：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231047339681655.png" alt="" height="250" width="313">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231424109055418.png" alt="" height="250" width="313"><br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231049192184034.png" alt="" height="250" width="313">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231049408582290.png" alt="" height="250" width="313"></p>
+<p>Zpass 方法的<strong>第一个问题</strong>是：当摄像机位于阴影中时，光照处 Stencil 值将不再为0，见下面的例子：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231450129058484.png" alt="" height="251" width="313">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231449342499628.png" alt="" height="251" width="314"><br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231452066715927.png" alt="" height="251" width="314">&nbsp;<img style="line-height: 1.5;" src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231451314993941.png" alt="" height="251" width="314"><br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231453296718637.png" alt="" height="251" width="314">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231453475151053.png" alt="" height="251" width="315"></p>
+<p>这个问题可以通过检测摄像机是否位于阴影中，并在摄像机位于阴影中时对 Stencil 值进行偏移进行解决，但这需要额外开销，后面用 Zfail 方法避免这一问题。和想象中的不同，摄像机<strong>并不是</strong> “要么在阴影中，要么在阴影外” ，它有可能 “一半位于阴影中，一半位于阴影外”，这其实是近裁剪面的作用：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231458141248370.png" alt="" height="251" width="314">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231458314058656.png" alt="" height="251" width="313"></p>
+<p>近裁剪面问题是 Zpass 方法的<strong>第二个问题</strong>，详见文献[3]。这小节代码见所附程序中的 volumes_zpass.cpp。</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18px;">3. Zfail 方法，实际方法</span></strong></p>
+<p>Zpass 失败的原因，以及 Zfail 方法的原理如下图所示（摘自文献[4]，a. Zpass 原理，b. Zpass 失败例子，c. Zfail 方法原理）：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231505321875472.jpg" alt=""></p>
+<p>Zpass 从摄像机发出射线到无穷远并计数，而 Zfail 正好相反，它从摄像机射线的穷远处到摄像机计数，当 Shadow Volume 封闭时且摄像机位于阴影外时，Zpass 和 Zfail 是等价的，因为：一条射线和封闭的 Shadow Volume 总是交于两个点（凸时，非凸时总是偶数个交点，前面已经分析了，极端情况在离散空间并不存在），若点 P 在某 Shadow Volume 中，Zpass 和 Zfail 对该 Shadow Volume 计数结果都为+1，若 P 在该 Shadow Volume 外，则 Zpass 和 Zfail 计数结果为 “0 和 +1-1” 或者 “+1-1 和 0”，此两种情况都是等价的说明了 Zfail 的正确性。</p>
+<p>Zfail 较 Zpass 有更<strong>好的特性</strong>：</p>
+<ul>
+<li>在摄像机位于阴影中时也能产生正确结果；</li>
+<li>不受近裁剪面影响，因为它只关心被物体遮挡的部分。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p>但其也有<strong>缺点</strong>需要克服：</p>
+<ul>
+<li>受远裁剪面影响，可以按照文献[3]将摄像机远裁剪面设置于无穷远处（精度损失并不大），也可以使用 glEnable(GL_DEPTH_CLAMP)；</li>
+<li>Zpass 不需要对Shadow Volume 封口（cap），而 Zfail 需要，并且需要对近端和远端都进行 cap，对远端进行 cap 是因为 Zfail 需要Shadow Volume 被遮挡的部分（很可能是远端），对近端进行 cap 是因为 Shadow Volume 被遮挡的部分可能是近端（摄像机从 P 点背后看物体）；</li>
+<li>Zfail 较 Zpass 通常产生更多的 Shadow Volume 片断，即需要更多的像素填充，这是因为 Shadow Volume 被遮挡的部分通常比未被遮挡的部分面积大。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p>实现 Zfail <strong>计数</strong>是直接的：</p>
+<ul>
+<li>将上面代码中通过 Depth Test 更新 Stencil Buffer 改为未通过时更新（故名 Zfail）。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p>对网格<strong>构造 Shadow Volume</strong> 的代码和之前稍有区别，需要 cap：</p>
+<ul>
+<li>对每个 “可能轮廓边” 进行挤出（extrude）到无穷远，需要四边形顶点环绕方向向外；</li>
+<li>对所有面对光源的三角形面，直接绘制，对所有背对光源的三角形面，将其顶点挤出到无穷远并绘制。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p>Zfail 代码见所附程序中的 Volumes_zfail.cpp。程序结果如下图所示，现在摄像机位于阴影中也不会有问题了，但渲染帧率也从 23fps 降到了 18 fps：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231712272962879.png" alt="" height="251" width="314">&nbsp;<img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231713057807723.png" alt="" height="251" width="314"><br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231721342801174.png" alt="" height="251" width="314"></p>
+<p>“实际方法” 一词出自文献[3]，这篇 2002 年的文章通过使用 Zfail 并将摄像机远裁剪面设置于无穷远处，改进了 Shadow Volumes 方法，更值得一提的是，它提到的 wrap 方式 Stencil 值更新、Depth Clamping、Two-Sided Stencil Testing 后来都已经是 OpenGL 标准了，这使得我们可以以更简洁的方式实现 Shadow Volumes。</p>
+<p>多个光源的处理和 Shadow Mapping 类似，下面是结果，代码见所附程序中的 volumes_multi_lights.cpp，关于平行光，因为已经利用齐次坐标特性考虑了光源 w 坐标，只需将光源坐标 w 分量设为 0 即可实现平行光：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/231926256084630.png" alt="" height="531" width="664"></p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18px;">4. 进一步研究</span></strong></p>
+<p>低质量网格（non-manifold 网格） Shadow Volume 构造见文献[4]，另外文献[4]给出了用几何着色器构造 Shadow Volume 的代码，通过裁剪 Shadow Volume 或交替使用 Zpass/Zfail 减小对像素填充率（需要光栅化的多边形面积）消耗的性能优化方法见文献[1]的文献[1]及文献[4]，基于 Shadow Volumes 的 Soft Shadow 方法见文献[1]的文献[1]。</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18px;">5.&nbsp;</span></strong><strong style="line-height: 1.5;"><span style="font-size: 18px;">Shadow Volumes</span></strong><strong style="line-height: 1.5;"><span style="font-size: 18px;">&nbsp;</span></strong><em style="line-height: 1.5;"><span style="font-size: 18px;">VS.</span></em><strong style="line-height: 1.5;"><span style="font-size: 18px;">&nbsp;</span></strong><strong style="line-height: 1.5;"><span style="font-size: 18px;">Shadow Mapping</span></strong></p>
+<p>先来看同一个场景用 Shadow Volumes 和 Shadow Mapping 两种方法渲染的对比图（我的机器配置：Pentium Dual-Core 2.6 GHz，4 GB DDR2，GT240 1GB GDDR5 OpenGL 3.3），代码见所附程序中的 comparison_volumes_mapping.cpp。</p>
+<p>第一个场景，2000 个正方体，每个正方体有 8 个顶点、12 个三角形，下面依次是无阴影、Shadow Volumes、Shadow Mapping 渲染结果，渲染时间和帧率在图中左上角和左下角（帧率结果包含全部CPU时间和GPU时间，更具综合性），Shadow Volumes 使用本文最后的 Zfail 方法，Shadow Mapping 使用 2048x2048 阴影图：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232133575624182.png" alt="" height="466" width="583">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232133515306458.png" alt="" height="466" width="583">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232134019835665.png" alt="" height="466" width="583"></p>
+<p>第二个场景，50 个猴头模型，每个猴头模型有 28.9K 个顶点、57.8K 个三角形，程序结果如下：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232304410625962.png" alt="" height="466" width="583">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232304598121234.png" alt="" height="466" width="583">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232305250469157.png" alt="" height="466" width="583">&nbsp;</p>
+<p>对上图作放大观察，Shadow Volumes 和 Shadow Mapping 方法的结果如下，可以看到 Shadow Volumes 放大后毫无锯齿，而 Shadow Mapping 方法已经有轻微锯齿：</p>
+<p><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232305541245609.png" alt="" height="466" width="583">&nbsp;<br><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/232306147188349.png" alt="" height="466" width="583"></p>
+<p>需要指出的是，这里实现的 Shadow Volumes 和 Shadow Mapping 可以进一步优化，如使用顶点列表、使用显示列表、优化几何数据结构、如果可能重用阴影图或阴影体积等等，所以上面的性能比较结果并不很准确，这里只想给出一个参考。</p>
+<p>对 Shadow Volumes 和 Shadow Mapping 作如下分析对比：</p>
+<ol>
+<li><strong>运行速度方面</strong>，基本的 Shadow Volumes 需要三遍渲染：环境光和深度值、Shadow Volume 和 Stencil 值、光源光，基本的 Shadow Mapping 需要三遍渲染：摄像机视角深度图、环境光和深度值、光源光，一般而言，Shadow Mapping 更快，这是因为构造和光栅化 Shadow Volume 比较耗时，粗略估算下 Shadow Mapping 比直接渲染（没有阴影）慢三倍左右（如果环境光不单独渲染则是二倍）；</li>
+<li><strong>渲染效果方面</strong>，Shadow Volumes 实现的是几何上精确的阴影，不存在锯齿问题，Shadow Mapping 存在锯齿问题，这可以通过增大深度图尺寸缓解，但并不能根本解决，Shadow Mapping 锯齿问题的根本原因是需要两个不同视角：光源视角和摄像机视角，两个视角下多边形的斜率以及多边形投影后的大小差异是产生锯齿的原因（无限放大去观察阴影的边沿，需要无限大的阴影图），而这并没有好的解决方法，相比之下 Shadow Volumes 的 Stencil 值渲染是在摄像机视角进行的，另外一般来说，从 Shadow Mapping 产生 Soft Shadow 相对容易；</li>
+<li><strong>鲁棒性或通用性方面</strong>，Shadow Volumes 需要良好的几何数据结构，即使算法能够处理非封闭网格，也要求网格的拓扑信息，从而优化 Shadow Volume 的构造，这使得使用 glutTeaport() 不再可能，因为几何数据被封装在了函数内部，几何计算发生很小错误时，Shadow Volumes 可能产生很明显的错误结果，相比之下 Shadow Mapping 对几何数据的要求则小的多，但 Shadow Mapping 也存在问题：需要剔除正面或使用深度偏移值以避免斑纹，而偏移值大小不好确定，需要特殊处理大视角光源，尤其全方向点光源，也需要特殊处理平行光（简单）；</li>
+<li><strong>研究和工业使用方面</strong>，Shadow Mapping 的研究和基于其的阴影的研究相对较多，Shadow Mapping 在工业中的使用也相对较多，这可能是因为其算法实现较为简单。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ol>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000; font-size: 16px;"><strong>下载链接</strong></span>：程序集成了上一博客 Shadow Mapping 的源代码，并支持64位，好多库是纯头文件，为了加快编译速度，使用了预编译头，请见代码中注释，工程的配置见程序文件夹下 “说明.txt”。</p>
+<p>链接: <a href="http://pan.baidu.com/s/1i3oXHSL" target="_blank">http://pan.baidu.com/s/1i3oXHSL</a> 密码: agx5</p>
+<p>（左Ctrl+鼠标左键拖拽改变视角，鼠标滚轮缩放）</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18px;"><strong>参考文献</strong></span></p>
+<ol>
+<li><a href="http://www.cnblogs.com/liangliangh/p/4131103.html" target="_blank">OpenGL阴影，Shadow Mapping（附源程序）</a>，及其参考文献；</li>
+<li><a href="http://en.wikipedia.org/wiki/Shadow_volume">http://en.wikipedia.org/wiki/Shadow_volume</a>；</li>
+<li>C. Everitt and M. J. Kilgard, "Practical and robust stenciled shadow volumes for hardware-accelerated rendering," arXiv preprint cs/0301002, 2002（<a href="http://arxiv.org/ftp/cs/papers/0301/0301002.pdf" target="_blank">进入下载</a>，<a href="https://developer.nvidia.com/sites/default/files/akamai/gamedev/docs/StencilShadows_CEDEC_E.pdf" target="_blank">PPT</a>）；</li>
+<li>GPU Gems 3, Chapter 11. Efficient and Robust Shadow Volumes Using Hierarchical Occlusion Culling and Geometry Shaders（<a href="http://http.developer.nvidia.com/GPUGems3/gpugems3_ch11.html" target="_blank">网页版</a>）。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #ff9900;">*******************************************************************************</span></p>
+<p><span style="font-size: 18px;"><span style="color: #ff0000;"><strong>附录</strong></span>：<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/" target="_blank">VCGlib 库</a> 使用说明</span></p>
+<p><span style="color: #000000;"><strong>先来看看 VCGlib 能做什么</strong></span>：</p>
+<ul>
+<li>最基本的，它提供 Mesh（triangular mesh，tetrahedral mesh，三角网格或四面体网格）数据结构的定义，该数据结构支持对 Mesh 数据的快速访问（拓扑信息、空间查询等）以及高效执行网格上算法；</li>
+<li>在 Mesh 数据结构基础上，实现大量高效的网格算法，如网格修补、平滑、变形、曲率计算、细分、泊松盘采样、等值面计算等；</li>
+<li>IO 支持，读写 PLY、OBJ、STL、3DS、OFF、DXF 等格式网格文件；</li>
+<li>UI 支持，如 OpenGL 网格显示，Trackball 交互等。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p>VCGlib 的文档很简陋，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/" target="_blank">在线文档</a>并不是很全，可以自己用 Doxygen <strong>从下载的源代码生成 html API 文档</strong>，为此只需要（Windows 用户）：</p>
+<ol>
+<li>安装 <a href="http://www.doxygen.nl/" target="_blank">Doxygen</a>（Doxywizard） 和&nbsp;<a href="http://www.graphviz.org/" target="_blank">Graphviz</a>，将 “Graphviz安装目录\Graphviz2.36\bin” 添加到环境变量Path；</li>
+<li>将本博客所附程序中的 “OpenGL Shadow\_Libs\vcglib\docs\doxyfile-all” 文件拷贝到下载的 VCGlib 文件夹下的 “vcglib\docs\Doxygen” 下，这个文件是我配置好的 Doxygen 配置文件；</li>
+<li>用&nbsp;Doxywizard&nbsp;打开上一步拷贝的文件，点击 “Run” 选项卡下的 “Run doxygen” 按钮，生成的 API 文档将位于 “vcglib\docs\Doxygen\html-all” 下（html-all 文件夹将有 129M 大小）。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ol>
+<p><strong>VCGlib 是纯头文件库</strong>，要<strong>安装</strong>只需将下载 VCGlib 库目录添加到程序的头文件包含路径（有些IO函数如读写PLY需要包含相应.cpp文件）。</p>
+<p><strong>后面按照如下步骤讲解</strong>：</p>
+<ol>
+<li>定义 Mesh 类型；</li>
+<li>访问及指定 Mesh 的顶点、三角形（对三角网格，如果是四面体网格则是四面体，这里默认只讲三角网格）等数据；</li>
+<li>IO，读写 PLY、OBJ 等网格文件；</li>
+<li>构造网格的拓扑信息，如顶点或三角形面法向量、三角形相邻三角形、边连接的三角形等信息；</li>
+<li>网格处理，如法向量平滑、网格修补等。</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ol>
+<p><strong>定义 Mesh 类型的典型代码如下</strong>（API 文档主页&nbsp;Basic Concepts，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/basic_concepts.html" target="_blank">在线版</a>）：</p>
+<div class="cnblogs_code">
+<pre>#include <span style="color: #800000;">"</span><span style="color: #800000;">vcg/complex/complex.h</span><span style="color: #800000;">"</span>
+<span style="color: #008000;">// 类型声明</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> MyVertex;</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> MyEdge;
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> MyFace;
+typedef vcg::UsedTypes</span>&lt;<span style="color: #000000;">
+    vcg::Use</span>&lt;MyVertex&gt;<span style="color: #000000;">::AsVertexType,
+    vcg::Use</span>&lt;MyEdge&gt;<span style="color: #000000;">  ::AsEdgeType,
+    vcg::Use</span>&lt;MyFace&gt;  ::AsFaceType &gt;<span style="color: #000000;">
+MyUsedTypes;
+<span style="color: #008000;">// 顶点类型
+</span></span><span style="color: #0000ff;">class</span> MyVertex : <span style="color: #0000ff;">public</span> vcg::Vertex&lt;<span style="color: #000000;">MyUsedTypes,
+    vcg::vertex::Coord3f,
+    vcg::vertex::Normal3f,
+    vcg::vertex::BitFlags </span>&gt;<span style="color: #000000;"> { };
+<span style="color: #008000;">// 边类型
+</span></span><span style="color: #0000ff;">class</span> MyEdge : <span style="color: #0000ff;">public</span> vcg::Edge&lt;<span style="color: #000000;">MyUsedTypes,
+    vcg::edge::VertexRef,
+    vcg::edge::EFAdj,
+    vcg::edge::BitFlags </span>&gt;<span style="color: #000000;"> { };
+<span style="color: #008000;">// 面类型，三角形
+</span></span><span style="color: #0000ff;">class</span> MyFace : <span style="color: #0000ff;">public</span> vcg::Face&lt;<span style="color: #000000;">MyUsedTypes,
+    vcg::face::VertexRef,
+    vcg::face::Normal3f,
+    vcg::face::FFAdj,
+    vcg::face::BitFlags </span>&gt;<span style="color: #000000;"> { };
+<span style="color: #008000;">// 网格类型</span>
+<span style="color: #0000ff;">typedef</span> vcg::tri::TriMesh</span>&lt;<span style="color: #000000;">
+    std::vector</span>&lt;MyVertex&gt;<span style="color: #000000;">,
+    std::vector</span>&lt;MyEdge&gt;<span style="color: #000000;">,
+    std::vector</span>&lt;MyFace&gt; &gt;<span style="color: #000000;"><strong>
+GLMesh</strong>;</span></pre>
+</div>
+<p>抛开 MyUseTypes 不看，上面代码定义的网格类型为：</p>
+<ul>
+<li>网格包含数据：顶点、边、三角形数组（std::vector&lt;&gt;）；</li>
+<li>每个顶点包含属性：空间坐标（3个float表示）、顶点法向量、标志位；</li>
+<li>每个边包含属性：顶点指针（指向该边的两个顶点）、边-面邻接信息、标志位；</li>
+<li>每个三角形面包含属性：顶点指针（指向该三角形的三个顶点）、面法向量、面-面邻接信息、标志位。</li>
+</ul>
+<p><strong>VCGlib 使用 Reference 数据结构</strong>，对每个边、面用指针记录其顶点、邻接面等信息，其他网格数据结构见 <a href="http://en.wikipedia.org/wiki/Polygon_mesh" target="_blank">wikipedia Polygon Mesh 条目</a>。</p>
+<p>为了做到足够通用，<strong><span style="color: #000000;">VCGlib 使用了C++ template metaprogramming（模板元编程）方法</span></strong>。上面代码中的 MyVertex、MyEdge、MyFace、GLMesh 等类型包含哪些属性（模板参数）、属性的顺序（模板参数顺序）都是可以根据需要随意指定的（当然，必须包含足够的属性以执行相应网格算法），一般来说，最好使顶点、边、面包含标志位属性（BitFlags），BitFlags 指示该顶点、边、面是否可写、可读、已删除（为了效率，例如，删除顶点操作可能并不立即删除顶点数据，而仅仅打个标志位，待所有操作完成再更新顶点数据）等。不去深入讲解 VCGlib 元编程机理（说实话我还没弄清楚），可选个数模板参数是通过<strong>默认模板参数</strong>实现的，<strong>vcg::Vertex/Edge/Face&lt;&gt; 将继承其模板参数</strong>。</p>
+<p><strong>下面列举所有可选的模板参数</strong>：</p>
+<ul>
+<li>网格 vcg::tri::TriMesh&lt;&gt; 最多可有四个参数：顶点容器、边容器、面容器、半边容器（vcg::HEdge&lt;&gt;）；</li>
+<li>顶点 vcg::Vertex&lt;&gt;<strong>&nbsp;</strong>可以包含的属性有：坐标、法向量、颜色、纹理坐标、标志位、网格质量（网格在该点出优劣评价指标）、曲率、半径、顶点-边邻接信息、顶点-面邻接信息、顶点-半边邻接信息，等（API 文档 Modules 选项卡 Vertex Components，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/group__VertexComponentGroup.html" target="_blank">在线版</a>）；</li>
+<li>边 vcg::Edge&lt;&gt;<strong>&nbsp;</strong>可以包含的属性有：顶点指针、颜色、标志位、网格质量、边-顶点邻接信息、边-边邻接信息、边-面邻接信息、边-半边邻接信息，等（API 文档 Modules 选项卡 Edge Components，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/group__EdgeComponentGroup.html" target="_blank">在线版</a>）；</li>
+<li>面 vcg::Face&lt;&gt;<strong>&nbsp;</strong>可以包含的属性有：顶点指针、法向量、颜色、标志位、网格质量、顶点-面邻接信息、面-边邻接信息、面-面邻接信息，等（API 文档 Modules 选项卡 Face Components，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/group__FaceComponentGroup.html" target="_blank">在线版</a>）。</li>
+</ul>
+<p><strong>访问 Mesh 数据示例代码如下</strong>：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;"><span style="color: #008000;">　　<strong>//</strong> <strong>load mesh</strong> ...</span><br>int</span> i=<span style="color: #800080;">0</span>, j=<span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 见 vcg::tri::TriMesh&lt;&gt; -------------------------------------------------------------</span>
+mesh.VN(); mesh.EN(); mesh.FN(); <span style="color: #008000;">//</span><span style="color: #008000;"> 顶点、边、面个数，可能小于 vs/es/fs.size()
+                                 </span><span style="color: #008000;">//</span><span style="color: #008000;"> 因为有些元素被删除时仅仅打了标志位而并未删除存储数据</span>
+std::vector&lt;GLMesh::VertexType&gt;&amp; vs = mesh.vert; <span style="color: #008000;">//</span><span style="color: #008000;"> 顶点数组</span>
+std::vector&lt;GLMesh::EdgeType&gt;&amp;   es = mesh.edge; <span style="color: #008000;">//</span><span style="color: #008000;"> 边数组</span>
+std::vector&lt;GLMesh::FaceType&gt;&amp;   fs = mesh.face; <span style="color: #008000;">//</span><span style="color: #008000;"> 面数组
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 见 vcg::Vertex&lt;&gt; 及其 模板参数 -------------------------------------------------------</span>
+GLMesh::VertexType&amp; v = mesh.vert[i]; <span style="color: #008000;">//</span><span style="color: #008000;"> 第 i 个顶点，假设 v.isD()==false，即未标志为已删除</span>
+v.P().Z(); v.P().V(j);    <span style="color: #008000;">//</span><span style="color: #008000;"> 顶点坐标，其xyz分量</span>
+v.N().X(); <span style="color: #008000;">//</span><span style="color: #008000;"> 顶点法向，其x分量
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 见 vcg::Edge&lt;&gt; 及其 模板参数 ---------------------------------------------------------</span>
+GLMesh::EdgeType&amp; e = mesh.edge[i]; <span style="color: #008000;">//</span><span style="color: #008000;"> 第 i 个边，假设 e.isD()==false</span>
+GLMesh::VertexType* pve = e.V(j);   <span style="color: #008000;">//</span><span style="color: #008000;"> j=0,1，边的两个端点顶点的指针</span>
+GLMesh::FaceType*   pfa = e.EFp();  <span style="color: #008000;">//</span><span style="color: #008000;"> 边-面邻接信息，该边连接的第一个面
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 见 vcg::Face&lt;&gt; 及其 模板参数 ---------------------------------------------------------</span>
+GLMesh::FaceType&amp; f = mesh.face[i]; <span style="color: #008000;">//</span><span style="color: #008000;"> 第 i 个面(三角形)，假设 f.isD()==false</span>
+GLMesh::VertexType* pvf = f.V(j);   <span style="color: #008000;">//</span><span style="color: #008000;"> j=0,1,2，三角形面的三个顶点的指针</span>
+f.N(); <span style="color: #008000;">//</span><span style="color: #008000;"> 面的法向量</span>
+GLMesh::FaceType* pfb = f.FFp(j); <span style="color: #008000;">//</span><span style="color: #008000;"> 面-面邻接信息，j=0,1,2，面 f 通过其第j个边连接的第一个面
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 可以通过返回的引用(左值)修改数据，但不要随便修改，见下文 ------------------------------------</span>
+v.P().Y() += <span style="color: #800080;">3.2f</span><span style="color: #000000;">;
+e.V(j) </span>= &amp;<span style="color: #000000;">v;
+f.V(j) </span>= &amp;<span style="color: #000000;">v;
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 遍历所有顶点、边、面需要跳过标记为已删除的元素 ---------------------------------------------</span>
+<span style="color: #0000ff;">for</span>(size_t i=<span style="color: #800080;">0</span>; i&lt;vs.size(); ++<span style="color: #000000;">i){
+    </span><span style="color: #0000ff;">if</span>(vs[i].IsD()) <span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> do some thing for each vertex vs[i] ...</span>
+<span style="color: #000000;">}
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 除非已经删除了所有标记为已删除元素的存储数据，比如：</span>
+vcg::tri::Allocator&lt;GLMesh&gt;<span style="color: #000000;">::CompactVertexVector(mesh);
+vcg::tri::Allocator</span>&lt;GLMesh&gt;<span style="color: #000000;">::CompactEdgeVector(mesh);
+vcg::tri::Allocator</span>&lt;GLMesh&gt;<span style="color: #000000;">::CompactFaceVector(mesh);
+</span><span style="color: #0000ff;">for</span>(size_t i=<span style="color: #800080;">0</span>; i&lt;fs.size(); ++<span style="color: #000000;">i){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> do some thing for each face fs[i] ...</span>
+}</pre>
+</div>
+<p><strong style="line-height: 1.5;">填充（Fill）Mesh 数据的示例代码如下</strong><span style="line-height: 1.5;">（API 文档主页 Creating and destroying elements，</span><a style="line-height: 1.5;" href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/allocation.html" target="_blank">在线版</a>，代码摘自那里<span style="line-height: 1.5;">）：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> VCGlib Reference 数据结构，依赖于指针，直接操作顶点、边、面数组 mesh.vert/edge/face 可能
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 产生 std::vector&lt;&gt; 存储重新分配，此时，相关指针将失效，vcg::tri::Allocator&lt;&gt; 处理这些问题</span>
+<span style="color: #000000;">GLMesh m;
+GLMesh::VertexIterator vi </span>= vcg::tri::Allocator&lt;GLMesh&gt;::AddVertices(m, <span style="color: #800080;">3</span><span style="color: #000000;">);
+GLMesh::FaceIterator fi </span>= vcg::tri::Allocator&lt;GLMesh&gt;::AddFaces(m, <span style="color: #800080;">1</span><span style="color: #000000;">);
+GLMesh::VertexPointer ivp[</span><span style="color: #800080;">4</span><span style="color: #000000;">];
+ivp[</span><span style="color: #800080;">0</span>]=&amp;*vi; vi-&gt;P()=GLMesh::CoordType(<span style="color: #800080;">0.0f</span>,<span style="color: #800080;">0.0f</span>,<span style="color: #800080;">0.0f</span>); ++<span style="color: #000000;">vi;
+ivp[</span><span style="color: #800080;">1</span>]=&amp;*vi; vi-&gt;P()=GLMesh::CoordType(<span style="color: #800080;">1.0f</span>,<span style="color: #800080;">0.0f</span>,<span style="color: #800080;">0.0f</span>); ++<span style="color: #000000;">vi;
+ivp[</span><span style="color: #800080;">2</span>]=&amp;*vi; vi-&gt;P()=GLMesh::CoordType(<span style="color: #800080;">0.0f</span>,<span style="color: #800080;">1.0f</span>,<span style="color: #800080;">0.0f</span>); ++<span style="color: #000000;">vi;
+fi</span>-&gt;V(<span style="color: #800080;">0</span>)=ivp[<span style="color: #800080;">0</span><span style="color: #000000;">]; fi</span>-&gt;V(<span style="color: #800080;">1</span>)=ivp[<span style="color: #800080;">1</span><span style="color: #000000;">]; fi</span>-&gt;V(<span style="color: #800080;">2</span>)=ivp[<span style="color: #800080;">2</span><span style="color: #000000;">];
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Alternative, more compact, method for adding a single vertex</span>
+ivp[<span style="color: #800080;">3</span>]= &amp;*vcg::tri::Allocator&lt;GLMesh&gt;::AddVertex(m,GLMesh::CoordType(<span style="color: #800080;">1.0f</span>,<span style="color: #800080;">1.0f</span>,<span style="color: #800080;">0.0f</span><span style="color: #000000;">));
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Alternative, method for adding a single face (once you have the vertex pointers)</span>
+vcg::tri::Allocator&lt;GLMesh&gt;::AddFace(m, ivp[<span style="color: #800080;">1</span>],ivp[<span style="color: #800080;">0</span>],ivp[<span style="color: #800080;">3</span><span style="color: #000000;">]);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 同理，如果自己保存了顶点等数据指针，需要在修改顶点、边、面数组后更新该指针 --------------------
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> a potentially dangerous pointer to a mesh element</span>
+GLMesh::FacePointer fp = &amp;m.face[<span style="color: #800080;">0</span><span style="color: #000000;">];
+vcg::tri::Allocator</span>&lt;GLMesh&gt;::PointerUpdater&lt;GLMesh::FacePointer&gt;<span style="color: #000000;"> pu;
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> now the fp pointer could be no more valid due to eventual re-allocation of the m.face</span>
+vcg::tri::Allocator&lt;GLMesh&gt;::AddVertices(m,<span style="color: #800080;">3</span><span style="color: #000000;">);
+vcg::tri::Allocator</span>&lt;GLMesh&gt;::AddFaces(m,<span style="color: #800080;">1</span><span style="color: #000000;">,pu);
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> check if an update of the pointer is needed and do it.</span>
+<span style="color: #0000ff;">if</span><span style="color: #000000;">(pu.NeedUpdate()) pu.Update(fp); <span style="color: #008000;">// 可以想见，pu 保存了地址偏移信息，只需将 fp 偏移
+
+</span></span><span style="color: #008000;">//</span><span style="color: #008000;"> 删除元素的代码如下 --------------------------------------------------------------------</span>
+vcg::tri::Allocator&lt;GLMesh&gt;::DeleteFace(m,m.face[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 拷贝网格（同样引起地址变化）的代码如下，GLMesh 没有拷贝构造函数，也没有 operator= ------------</span>
+<span style="color: #000000;">GLMesh m2;
+vcg::tri::Append</span>&lt;GLMesh,GLMesh&gt;::MeshCopy(m2, m, false, true); <span style="color: #008000;">// m to m2</span></pre>
+</div>
+<p><strong>IO，读写网格文件示例代码如下</strong>（API 文档主页&nbsp;Loading and saving meshes，<a href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/fileformat.html" target="_blank">在线版</a>）：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> Mesh 文件一般至少包含顶点数组信息，还可以包含连接信息(三角形)、顶点法向量、顶点颜色、面颜色、
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 面法向量、纹理坐标等等属性，用 mask 的二进制位来标记或控制读取或写入了 Mesh 文件的哪些属性
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 见 vcg::tri::io::Mask，读取 PLY 需要包含文件 "vcglib/wrap/ply/plylib.cpp"（<a href="http://sourceforge.net/p/vcg/discussion/342260/thread/33b62420/?limit=25" target="_blank">见这里</a>）
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 头文件包含：#include "wrap/io_trimesh/import.h" #include "wrap/io_trimesh/export.h"</span>
+GLMesh m; <span style="color: #0000ff;">int</span><span style="color: #000000;"> mask;
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 读取 PLY 文件，并检查返回值，参数 mask 为可选，mask 是返回参数：读入了哪些属性</span>
+<span style="color: #0000ff;">if</span>( vcg::tri::io::ImporterPLY&lt;GLMesh&gt;::Open(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_open.ply</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask)
+    </span>!=<span style="color: #000000;"> vcg::ply::E_NOERROR ) {
+    std::cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Load PLY file ERROR\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+}
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> some modification to m and mask ...
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 保存 PLY 文件，mask 是输入参数，控制 m 的哪些属性被写入到文件</span>
+vcg::tri::io::ExporterPLY&lt;GLMesh&gt;::Save(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_save.ply</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 读取或写入 OBJ 文件的代码，mask 作用同上</span>
+<span style="color: #0000ff;">if</span>( vcg::tri::io::ImporterOBJ&lt;GLMesh&gt;::Open(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_open.obj</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask)
+    </span>!= vcg::tri::io::ImporterOBJ&lt;GLMesh&gt;<span style="color: #000000;">::E_NOERROR ) {
+        std::cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Load OBJ file ERROR\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+}
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> some modification to m and mask ...</span>
+vcg::tri::io::ExporterOBJ&lt;GLMesh&gt;::Save(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_save.obj</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 读取、写入网格文件，将根据文件扩展名自动匹配文件格式 ---------------------------------------</span>
+<span style="color: #0000ff;">int</span> oerr = vcg::tri::io::Importer&lt;GLMesh&gt;::Open(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_open.off</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask);
+</span><span style="color: #0000ff;">if</span>( oerr != <span style="color: #800080;">0</span><span style="color: #000000;"> ){
+    std::cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Load mesh file ERROR: </span><span style="color: #800000;">"</span>
+        &lt;&lt; vcg::tri::io::Importer&lt;GLMesh&gt;::ErrorMsg(oerr) &lt;&lt; <span style="color: #800000;">'</span><span style="color: #800000;">\n</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+}
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> some modification to m and mask ...</span>
+<span style="color: #0000ff;">int</span> serr = vcg::tri::io::Exporter&lt;GLMesh&gt;::Save(m, <span style="color: #800000;">"</span><span style="color: #800000;">file_to_save.3ds</span><span style="color: #800000;">"</span><span style="color: #000000;">, mask);
+</span><span style="color: #0000ff;">if</span>( serr != <span style="color: #800080;">0</span><span style="color: #000000;"> ){
+    std::cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Save mesh file ERROR: </span><span style="color: #800000;">"</span>
+        &lt;&lt; vcg::tri::io::Exporter&lt;GLMesh&gt;::ErrorMsg(oerr) &lt;&lt; <span style="color: #800000;">'</span><span style="color: #800000;">\n</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<p><strong style="line-height: 1.5;">构造网格拓扑信息示例代码如下</strong><span style="line-height: 1.5;">（API 文档主页&nbsp;Adjacency and Topology，</span><a style="line-height: 1.5;" href="http://vcg.isti.cnr.it/%7Ecignoni/newvcglib/html/adjacency.html" target="_blank">在线版</a><span style="line-height: 1.5;">）：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">　　<strong>//</strong></span><strong><span style="color: #008000;"> load mesh ...</span></strong>
+vcg::tri::UpdateNormal&lt;GLMesh&gt;::PerFaceNormalized(mesh); <span style="color: #008000;">//</span><span style="color: #008000;"> 计算顶点法向量，并单位化</span>
+vcg::tri::UpdateNormal&lt;GLMesh&gt;::PerVertexNormalized(mesh); <span style="color: #008000;">//</span><span style="color: #008000;"> 计算面法向量，并单位化</span>
+vcg::tri::UpdateTopology&lt;GLMesh&gt;::FaceFace(mesh); <span style="color: #008000;">//</span><span style="color: #008000;"> 计算面-面邻接信息</span>
+vcg::tri::UpdateTopology&lt;GLMesh&gt;::AllocateEdge(mesh); <span style="color: #008000;">//</span><span style="color: #008000;"> 计算边-面邻接信息，需要面-面信息</span>
+vcg::Matrix44f mat(&amp;glm::translate(glm::vec3(<span style="color: #800080;">1</span>,<span style="color: #800080;">2</span>,<span style="color: #800080;">3</span>))[<span style="color: #800080;">0</span>][<span style="color: #800080;">0</span><span style="color: #000000;">]);
+vcg::tri::UpdatePosition</span>&lt;GLMesh&gt;::Matrix(mesh, mat, <span style="color: #0000ff;">true</span>); <span style="color: #008000;">//</span><span style="color: #008000;"> 更新顶点位置，并更新法向量
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 在调用 UpdateTopology&lt;&gt;::FaceFace() 和 UpdateTopology&lt;&gt;::AllocateEdge() 后就构造了边到面
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 的信息，对于 manifold 网格，每个边必连接两个三角形面，下面代码对边 i 查找其连接的面 fa 和 fb</span>
+<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; GLMesh::EdgeType&amp; e =<span style="color: #000000;"> mesh.edge[i];
+GLMesh::FaceType</span>* fa =<span style="color: #000000;"> e.EFp();
+GLMesh::FaceType</span>* fb = fa-&gt;FFp(e.EFi());</pre>
+</div>
+<p>在准备这篇博客之初，研究 VCGlib 时，发现了 VCGlib 的一个 BUG，已经报告给开发者并得到确认（<a href="http://sourceforge.net/p/vcg/bugs/43/" target="_blank">见这里</a>，看看时间，发现这篇博客因为一些原因拖了20多天...）。</p>
+<p><strong>网格处理示例代码如下</strong>：</p>
+<div class="cnblogs_code">
+<pre>vcg::tri::Clean&lt;GLMesh&gt;::RemoveDuplicateVertex(mesh); <span style="color: #008000;">//</span><span style="color: #008000;"> 去除重合的顶点</span>
+vcg::tri::Smooth&lt;GLMesh&gt;::VertexNormalLaplacian(mesh, <span style="color: #800080;">5</span>); <span style="color: #008000;">//</span><span style="color: #008000;"> 平滑顶点法向量</span>
+<span style="color: #0000ff;">float</span> maxSizeHole = <span style="color: #800080;">2.0f</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> fill 所有直径小于 maxSizeHole 的洞</span>
+vcg::tri::Hole&lt;GLMesh&gt;<span style="color: #000000;">::EarCuttingIntersectionFill
+    </span>&lt;vcg::tri::SelfIntersectionEar&lt;GLMesh&gt;&gt;(mesh, maxSizeHole, <span style="color: #0000ff;">false</span>);</pre>
+</div>
+<p><strong>进一步学习的资源</strong>：</p>
+<ul>
+<li>下载的 VCGlib 源代码 “vcglib\apps\sample” 下的官方示例代码；</li>
+<li>源代码，结合 API 文档；</li>
+<li>基于 VCGlib 的软件 <a href="http://meshlab.sourceforge.net/" target="_blank">MeshLab</a>，可以用于网格文件处理。</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2014-12-23 23:36</span> <a href="http://www.cnblogs.com/liangliangh/">liangliangh</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=4165228" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4165228);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=151287,cb_entryId=4165228,cb_blogApp=currentBlogApp,cb_blogUserGuid='21c12945-41bc-e211-b39b-90b11c0b1faa',cb_entryCreatedDate='2014/12/23 23:36:00';loadViewCount(cb_entryId);</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    fixPostBodyFormat();
+</script>
+<div id="google_ad_c1" class="c_ad_block"></div>
+<div id="under_post_news"></div>
+<div id="google_ad_c2" class="c_ad_block"></div>
+<div id="under_post_kb"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+});
+</script>
+</div>
+    
+</div>
+<div id="rightmenu">
+    
+        
+<h3>公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+
+        
+<h3>导航</h3>
+<ul>
+			<li><a id="MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a></li>
+			<li><a id="MyLinks1_MyHomeLink" href="http://www.cnblogs.com/liangliangh/">首页</a></li>
+			<li></li>
+			<li><a id="MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://msg.cnblogs.com/send/liangliangh">联系</a></li>
+			<li><a id="MyLinks1_Syndication" href="http://www.cnblogs.com/liangliangh/rss">订阅</a><a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/liangliangh/rss"><img src="OpenGL%E9%98%B4%E5%BD%B1%EF%BC%8CShadow%20Volumes%EF%BC%88%E9%99%84%E6%BA%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E4%BD%BF%E7%94%A8%20VCGlib%20%EF%BC%89%20-%20liangliangh%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/xml.gif" alt="订阅"></a>
+			</li><li><a id="MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+        <div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+        
+<h3>统计</h3>
+	<ul>
+		<li>随笔 - 30
+		</li><li>文章 - 0
+		</li><li>评论 - 123
+		</li><li>引用 - 0
+	</li>
+</ul>
+        <div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+    
+</div>
+</div>
+<div class="clear"></div>
+
+<div id="footer">
+	Powered by: 
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>	Copyright © liangliangh
+</div>
+
+
+
+</div></body></html>
